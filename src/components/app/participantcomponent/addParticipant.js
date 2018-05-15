@@ -12,12 +12,14 @@ import { BarLoader } from 'react-css-loaders';
 import { userActions } from '../../../_actions';
 import Autocomplete from 'react-google-autocomplete';
 import Footer from '../../common/footer';
+import axios from 'axios';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 
 class Addparticipant extends Component {
     constructor(props) {
         super(props);
-
+        this.state = { selectedFile: null }
         this.state = {
             PId: '',
             FirstName: '',
@@ -30,7 +32,7 @@ class Addparticipant extends Component {
             City: ' ',
             street: ' ',
             ZipCode: ' ',
-            Image: ' ',
+            Image: '',
             bloodgroup: ' ',
             EnrollmentDate: moment(),
             mothername: ' ',
@@ -52,11 +54,26 @@ class Addparticipant extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleChange1 = this.handleChange1.bind(this);
         this.updateAddress = this.updateAddress.bind(this);
+        this.uploadHandler = this.uploadHandler.bind(this);
     }
+
+    fileChangedHandler = (event) => {
+        this.setState({ selectedFile: event.target.files[0] })
+    }
+
+
     onChange = (e) => {
         const state = this.state
         state[e.target.name] = e.target.value;
         this.setState(state);
+    }
+
+    uploadHandler = (e) => {
+        console.log("inside uploadeer handler");
+        e.preventDefault();
+        const formData = new FormData()
+        formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
+        axios.post('http://localhost:57840/api/Image', formData)
     }
 
     updateAddress(address) {
@@ -73,7 +90,7 @@ class Addparticipant extends Component {
     }
 
     onSubmit = (e) => {
-        debugger;
+
         e.preventDefault();
         let data = {
             PId: this.state.PId,
@@ -86,7 +103,7 @@ class Addparticipant extends Component {
             City: this.state.City,
             Street: this.state.Street,
             ZipCode: this.state.zipcode,
-            Image: this.state.Image,
+            //  Image: this.state.Image,
             BloodGroup: this.state.BloodGroup,
             EnrollmentDate: moment(this.state.EnrollmentDate).format('DD/MM/YYYY'),
             MotherName: this.state.MotherName,
@@ -100,12 +117,14 @@ class Addparticipant extends Component {
             GuardianName: this.state.GuardianName,
             GCellPhone: this.state.GCellPhone,
         }
+
         this.setState({ submitted: true });
-        const { FirstName, LastName, Gender, DateOfBirth, Address, Country, State, City, street, ZipCode, Image, bloodgroup, EnrollmentDate, mothername, occupation,
+        const { FirstName, LastName, Gender, DateOfBirth, Address, Country, State, City, street, ZipCode, bloodgroup, EnrollmentDate, mothername, occupation,
             email, cellphone, fathername, foccupation, femail, fcellphone, GuardianName, GCellPhone } = this.state;
-        if (FirstName && LastName && Gender && DateOfBirth && Address && Country && State && City && street && ZipCode && Image
+        if (FirstName && LastName && Gender && DateOfBirth && Address && Country && State && City && street && ZipCode
             && bloodgroup && EnrollmentDate && mothername && occupation && email && cellphone && fathername && foccupation && femail
             && fcellphone && GuardianName && GCellPhone) {
+
             this.props.actions.addParticipant(data);
         }
     }
@@ -124,6 +143,7 @@ class Addparticipant extends Component {
     }
     render() {
         const { loading } = this.state;
+
         if (loading) { // if your component doesn't have to wait for an async action, remove this block 
             return (
                 <div className="col-sm-12">
@@ -150,6 +170,7 @@ class Addparticipant extends Component {
         }
         const { FirstName, LastName, Gender, DateOfBirth, Address, Country, State, City, Street, ZipCode, BloodGroup, EnrollmentDate, MotherName,
             Occupation, Email, CellPhone, FatherName, FOccupation, FEmail, FCellPhone, GuardianName, GCellPhone, submitted } = this.state;
+
         return (
             <div className="col-sm-12">
                 <Dashboard>
@@ -165,8 +186,8 @@ class Addparticipant extends Component {
                     <Sidebar />
                 </div>
                 <div className="col-sm-10 mt-5 card paticipantform">
-                    <div className="container  scroller">
-                        <form onSubmit={this.onSubmit}>
+                    <div className="container scroller">
+                        <form onSubmit={this.onSubmit} name="participantform" id="a">
                             <div>
                                 <div className="tc">
 
@@ -211,7 +232,7 @@ class Addparticipant extends Component {
                                             </div>
                                             <div className="dob1">
                                                 <DatePicker
-                                                    className="form-control"
+                                                    className="form-control labl"
                                                     selected={this.state.DateOfBirth}
                                                     onChange={this.handleChange}
                                                     peekNextMonth
@@ -235,8 +256,11 @@ class Addparticipant extends Component {
                                                 {/* ------------------FOR GIVING THE ADDRESS AUTOMATICALLY WHEN USER TYPE A WORD  */}
                                                 <Autocomplete
                                                     className="form-control"
+                                                    data-toggle="tooltip"
+                                                    data-placement="right"
+                                                    title="Country, State and City will be automatically filled"
                                                     id="inputAddress2"
-                                                    placeholder="Enter the Address"
+                                                    placeholder="Enter your Address"
                                                     name="Address"
                                                     value={this.state.Address}
                                                     onChange={this.onChange}
@@ -297,13 +321,11 @@ class Addparticipant extends Component {
                                         </div>
 
                                         <div className="form-group col-md-5">
-                                            <div className={'form-group' + (submitted && !Image ? ' has-error' : '')}>
+                                            <form name="imgform" id="ab">
                                                 <label className="labl ">Image</label>
-                                                <input type="file" className="form-control-image" name=" Image" onChange={this.onChange} />
-                                                {submitted && !Image &&
-                                                    <div className="help-block labl zoom">Image is required</div>
-                                                }
-                                            </div>
+                                                <input name="name" type="file" onChange={this.fileChangedHandler} className="labl" />
+                                                <button onClick={this.uploadHandler} className="btn btn-primary labl">Upload!</button>
+                                            </form>
                                         </div>
                                     </div>
 
@@ -443,7 +465,7 @@ class Addparticipant extends Component {
                                     </div>
                                 </div>
                                 <button type="submit" className="btn btn-danger buttonedit">Add</button> &nbsp; &nbsp;
-                        <button type="reset" className="btn btn-primary  ">Reset</button>
+                                <button type="reset" className="btn btn-primary">Reset</button>
                             </div>
                         </form>
                     </div>

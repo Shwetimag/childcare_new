@@ -39,6 +39,7 @@ export function fetchAllParticipant(num) {
   };
 }
 export  function addParticipant(participants) {
+  console.log(participants)
   return function(dispatch) {
     return axios
       .post('http://localhost:57840/api/participant',participants)

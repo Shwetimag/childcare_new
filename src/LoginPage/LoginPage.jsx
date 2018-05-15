@@ -85,14 +85,14 @@ class LoginPage extends React.Component {
                             <div className="txt1">Child Care</div>
                         </div>
                         <div className="col-md-5 mt-5 card lf">
-                            <h2 className="labl tc">Sign In</h2>
+                            <h3 className="labl tc">Sign In</h3>
                             <form name="form" onSubmit={this.handleSubmit}>
                                 <div className="tc">
                                     <div className={'form-group' + (submitted && !Username ? ' has-error' : '')}>
-                                        <label htmlFor="username" className="labl">Username</label>
+                                        <label htmlFor="username" className="labl">Email</label>
                                         <input type="text" className="form-control" name="Username" value={Username} onChange={this.handleChange} />
                                         {submitted && !Username &&
-                                            <div className="help-block labl zoom">Username is required</div>
+                                            <div className="help-block labl zoom">Email is required</div>
                                         }
                                     </div>
                                     <div className={'form-group' + (submitted && !Password ? ' has-error' : '')}>

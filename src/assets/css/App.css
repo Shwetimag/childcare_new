@@ -97,17 +97,17 @@ color:#fff !important;
   font-size: 90px;
   font-style: oblique;
   font-weight: normal;
-  text-shadow: 3px 3px #84ff0099;
+  text-shadow: 1px 2px #84ff0099;
   margin-top: 35px;
 }
 
 .txt1 {
-    font-family: cursive;
+    font-family: initial;
     color: #0083D7;
-    font-size: 105px;
+    font-size: 100px;
     font-style: oblique;
     font-weight: bold;
-    text-shadow: 1px 5px #84ff0099;
+    text-shadow: 1px 3px #84ff0099;
     text-transform: none;
 }
 

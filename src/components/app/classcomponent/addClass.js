@@ -114,8 +114,8 @@ class Addclass extends Component {
                                     <div className="form-row ">
                                         <div className="form-group col-md-5 ">
                                             <div className={'form-group' + (submitted && !Max_no_of_student ? ' has-error' : '')}>
-                                                <label className="labl">Max No. Of Student</label>
-                                                <input type="text" className="form-control" id="inputPassword4" placeholder="Class Capacity" name="Max_no_of_student" onChange={this.onChange} />
+                                                <label className="labl">Class Capacity</label>
+                                                <input type="text" className="form-control" id="inputPassword4" placeholder="Maximum no. of Students" name="Max_no_of_student" onChange={this.onChange} />
                                                 {submitted && !Max_no_of_student &&
                                                     <div className="help-block labl zoom">Maximum no of student is required</div>
                                                 }

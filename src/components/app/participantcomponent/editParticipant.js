@@ -65,6 +65,16 @@ class EditParticipant extends Component {
             });
         setTimeout(() => this.setState({ loading: false }), 1500);
     }
+    fileChangedHandler = (event) => {
+        this.setState({ selectedFile: event.target.files[0] })
+    }
+    uploadHandler = (e) => {
+        console.log("inside uploadeer handler");
+        e.preventDefault();
+        const formData = new FormData()
+        formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
+        axios.post('http://localhost:57840/api/Image', formData)
+    }
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -195,8 +205,11 @@ class EditParticipant extends Component {
                                         </div>
 
                                         <div className="form-group col-md-5">
-                                            <label className="labl">Image</label>
-                                            <input type="file" className="form-control-image" id="inputCity" name=" Image" onChange={this.onChange} />
+                                            <form name="imgform" id="ab">
+                                                <label className="labl ">Image</label>
+                                                <input name="name" type="file" onChange={this.fileChangedHandler} className="labl" />
+                                                <button onClick={this.uploadHandler} className="btn btn-primary labl">Upload!</button>
+                                            </form>
                                         </div>
                                     </div>
                                     <div className="form-row ">
