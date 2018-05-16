@@ -65,25 +65,24 @@ function register(Name, Email, Password, ConfirmPassword) {
 }
 
 function Forgotpassword(Email) {
-    debugger;
     return dispatch => {
         dispatch(request(Email));
         userService.Forgotpassword({ Email })
             .then(
-            user => {
-                dispatch(success(user));
-                dispatch(alertActions.success('Registration successful'));
+            Email => {
+                dispatch(success(Email));
+                dispatch(alertActions.success('New password has been send to your email'));
                 history.push('/login');
             },
             error => {
                 dispatch(failure(error));
-                dispatch(alertActions.error(error));
+                dispatch(alertActions.error("Email id does not exist"));
             }
             );
     };
 
     function request(user) { return { type: userConstants.FORGOT_REQUEST, user } }
-    function success(user) { return { type: userConstants.FORGOT_SUCCESS, user } }
+    function success(Email) { return { type: userConstants.FORGOT_SUCCESS, Email } }
     function failure(error) { return { type: userConstants.FORGOT_FAILURE, error } }
 }
 

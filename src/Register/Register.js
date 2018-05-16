@@ -31,7 +31,6 @@ class register extends React.Component {
     }
 
     handleSubmit(e) {
-
         e.preventDefault();
         this.setState({ submitted: true });
         const { Name, Email, Password, ConfirmPassword } = this.state;
@@ -40,6 +39,7 @@ class register extends React.Component {
             dispatch(userActions.register(Name, Email, Password, ConfirmPassword));
         }
     }
+    
     componentDidMount() {
         setTimeout(() => this.setState({ loading: false }), 1500); // simulates an async action, and hides the spinner
     }

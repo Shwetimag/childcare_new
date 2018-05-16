@@ -10,7 +10,6 @@ import Footer from '../components/common/footer';
 class Forgotpassword extends React.Component {
     constructor(props) {
         super(props);
-        // reset login status
         this.props.dispatch(userActions.logout());
         this.state = {
             Email: '',
@@ -44,6 +43,7 @@ class Forgotpassword extends React.Component {
 
     render() {
         const { loading } = this.state;
+        const { Email, submitted } = this.state;
         if (loading) { // if your component doesn't have to wait for an async action, remove this block 
             return (
                 <div className="container">
@@ -59,8 +59,8 @@ class Forgotpassword extends React.Component {
                 </div>
             );
         }
-        const { registering } = this.props;
-        const { Email, submitted } = this.state;
+       // const { registering } = this.props;
+      
         return (
             <div className="container">
                 <Dashboard />
@@ -83,9 +83,9 @@ class Forgotpassword extends React.Component {
                         <div className="form-group">
                             <button className="btn btn-primary labl" >Submit</button>
                             <Link to="/login" className="labl tc"> Cancel </Link>
-                            {registering &&
+                            {/* {registering &&
                                 <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" alt="" />
-                            }
+                            } */}
                         </div>
                     </form>
                 </div>
@@ -99,9 +99,9 @@ class Forgotpassword extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { registering } = state.authentication;
+    const { a } = state.authentication;
     return {
-        registering
+        a
     };
 }
 const connectedregister = connect(mapStateToProps)(Forgotpassword);
